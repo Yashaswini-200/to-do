@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&family=DynaPuff:wght@400..700&family=Rouge+Script&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #333;
+            font-family: 'Arial', sans-serif;
+        }
+        .img1, .img2 {
+            width: 200px;
+            height: 200px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .dice {
+            display: inline-block;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 7rem;
+            color: #74eaa9;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        p {
+            font-family: "Rouge Script", cursive;
+            font-weight: 400;
+            font-style: normal;
+            color:  #62eba0;
+            font-size: 30px;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        input {
+            font-size: 18px;
+            padding: 5px;
+            margin: 10px;
+            width: 150px;
+            display: none; /* Hidden by default */
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #74eaa9;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #62eba0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roll the Dice!</h1>
+        
+        <div>
+            <p id="player1Display">Player 1</p>
+            <button onclick="toggleNameInput('player1')">Change Player 1 Name</button>
+            <input type="text" id="player1Name" placeholder="Enter Player 1 Name" />
+        </div>
+
+        <div class="dice">
+            <img class="img1" src="images/dice1.png" alt="Dice 1" />
+        </div>
+        
+        <div>
+            <p id="player2Display">Player 2</p>
+            <button onclick="toggleNameInput('player2')">Change Player 2 Name</button>
+            <input type="text" id="player2Name" placeholder="Enter Player 2 Name" />
+        </div>
+
+        <div class="dice">
+            <img class="img2" src="images/dice2.png" alt="Dice 2" />
+        </div>
+
+        <button onclick="rollDice()">Roll Dice</button>
+        
+        <footer>&reg;Aish</footer>
+    </div>
+
+    <script>
+        const img1 = document.querySelector('.img1');
+        const img2 = document.querySelector('.img2');
+        const player1Display = document.getElementById('player1Display');
+        const player2Display = document.getElementById('player2Display');
+        const player1NameInput = document.getElementById('player1Name');
+        const player2NameInput = document.getElementById('player2Name');
+
+        // Function to toggle name input visibility
+        function toggleNameInput(player) {
+            const inputField = document.getElementById(player + 'Name');
+            inputField.style.display = (inputField.style.display === 'none' || inputField.style.display === '') ? 'block' : 'none';
+        }
+
+        function rollDice() {
+            // Randomize dice rolls
+            const randomNumber1 = Math.floor(Math.random() * 6) + 1;
+            const randomNumber2 = Math.floor(Math.random() * 6) + 1;
+
+            // Change dice images
+            img1.src = `images/dice${randomNumber1}.png`;
+            img2.src = `images/dice${randomNumber2}.png`;
+
+            // Update player names if they entered a new name
+            const player1Name = player1NameInput.value || 'Player 1';
+            const player2Name = player2NameInput.value || 'Player 2';
+
+            player1Display.textContent = `${player1Name}: ${randomNumber1}`;
+            player2Display.textContent = `${player2Name}: ${randomNumber2}`;
+        }
+
+        // Initial roll when page loads
+        window.onload = rollDice;
+    </script>
+</body>
+</html>

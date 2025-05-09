@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #B8E3E9, #93B1B5);
+    }
+
+    h1 {
+      text-align: center;
+      color: #001c34;
+    }
+
+    .container {
+      align-items: center;
+      justify-content: center;
+      background-color: #f4f5f6;
+      padding: 25px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      font-family: Arial, sans-serif;
+      margin: 30px auto;
+    }
+
+    .todo-container {
+      justify-content: center;
+      display: flex;
+      margin-top: 20px;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    input[type='text'] {
+      width: 280px;
+      padding: 10px;
+      border: 1px solid #b0bec5;
+      border-radius: 6px;
+      background-color: #dae6fb;
+    }
+
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      background: linear-gradient(to left,#a5dae1, #7d9ca0);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(to left,#7d9ca0, #a5dae1);
+    }
+
+    .todo-list {
+      margin-top: 20px;
+    }
+    .newtask {
+      background: linear-gradient(to left,#a5dae1, #7d9ca0);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .newtask.completed{
+      text-decoration: line-through;
+      background:linear-gradient(to left,#7d9ca0, #a5dae1);
+      color: #004d40;
+    }
+    .newtask .task-text {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+    <div class="todo-container">
+      <input type="text" id="taskInput" placeholder="Enter a task..." />
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <div class="todo-list">
+      <!-- Tasks will appear here -->
+    </div>
+  </div>
+  <script>
+    function addTask(){
+      var taskInput = document.getElementById("taskInput");
+      var taskText = taskInput.value.trim();
+      if(taskText == ""){
+        alert("Please enter a task.");
+        return;
+      }
+      var taskList = document.querySelector(".todo-list");
+      var newTask = document.createElement("div");
+      newTask.className = "newtask"; 
+      newTask.innerHTML = `<span class="task-text">${taskText}</span>`;
+
+      // Add event listener to toggle completed class
+      newTask.addEventListener("click", function(){
+        this.classList.toggle("completed");
+      });
+      
+    taskList.appendChild(newTask);
+      taskInput.value = ""; // Clear the input field
+    }
+    // event listener for Enter key
+    document.getElementById("taskInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        addTask();
+      }
+    });
+
+  </script>
+</body>
+</html>

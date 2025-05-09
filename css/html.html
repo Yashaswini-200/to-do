@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Image Detector</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #0A0F1F;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      padding: 40px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      background-color: #111827;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: white;
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    .upload-box {
+      width: 100%;
+      padding: 25px;
+      border: 2px dashed #4B5563;
+      border-radius: 12px;
+      background: #1E293B;
+      color: white;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .upload-box:hover {
+      border-color: #758290;
+      background: #2A3B4D;
+    }
+
+    .dragging {
+      background: #3A4B5D !important;
+      border-color: #9AAFC3 !important;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .file-name {
+      margin-top: 10px;
+      color: #AAB8C2;
+      font-size: 16px;
+      display: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-top: 5px;
+    }
+
+    .loading {
+      color: #FFD700;
+      display: none;
+      margin-top: 10px;
+    }
+
+    canvas {
+      display: none;
+      margin-top: 20px;
+      border: 2px solid #4B5563;
+    }
+
+    #resultText {
+      display: none;
+      margin-top: 20px;
+      color: white;
+      font-size: 18px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      background: #758290;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background: #5A6A7B;
+      transform: translateY(-3px);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:disabled {
+      background: #4B5563;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Upload Image for AI Check</h2>
+
+    <label for="file" class="upload-box" id="drop-area">
+      📂 Drag & Drop or Click to select a file
+    </label>
+    <input type="file" name="file" id="file" />
+    <p class="file-name" id="fileName">No file selected</p>
+    <p class="error" id="errorMsg"></p>
+    <p class="loading" id="loadingMsg">Analyzing image...</p>
+    <canvas id="previewCanvas" width="300" height="300"></canvas>
+    <p id="resultText"></p>
+
+    <button id="uploadBtn" disabled>Analyze</button>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById("file");
+    const fileNameDisplay = document.getElementById("fileName");
+    const uploadBtn = document.getElementById("uploadBtn");
+    const dropArea = document.getElementById("drop-area");
+    const errorMsg = document.getElementById("errorMsg");
+    const loadingMsg = document.getElementById("loadingMsg");
+    const previewCanvas = document.getElementById("previewCanvas");
+    const resultText = document.getElementById("resultText");
+
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+    const maxSize = 10 * 1024 * 1024;
+
+    function validateFile(file) {
+      if (!allowedTypes.includes(file.type)) {
+        errorMsg.textContent = "Invalid file type! Only PNG, JPG allowed.";
+        errorMsg.style.display = "block";
+        return false;
+      }
+      if (file.size > maxSize) {
+        errorMsg.textContent = "File is too large! Max 10MB allowed.";
+        errorMsg.style.display = "block";
+        return false;
+      }
+      errorMsg.style.display = "none";
+      return true;
+    }
+
+    function previewImage(file) {
+      const ctx = previewCanvas.getContext("2d");
+      const img = new Image();
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        img.onload = function () {
+          previewCanvas.style.display = "block";
+          ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+          ctx.drawImage(img, 0, 0, previewCanvas.width, previewCanvas.height);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    fileInput.addEventListener("change", function () {
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (validateFile(file)) {
+          fileNameDisplay.textContent = file.name;
+          fileNameDisplay.style.display = "block";
+          uploadBtn.disabled = false;
+          previewImage(file);
+        } else {
+          fileNameDisplay.style.display = "none";
+          uploadBtn.disabled = true;
+        }
+      }
+    });
+
+    dropArea.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropArea.classList.add("dragging");
+    });
+
+    dropArea.addEventListener("dragleave", () => {
+      dropArea.classList.remove("dragging");
+    });
+
+    dropArea.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropArea.classList.remove("dragging");
+      if (e.dataTransfer.files.length > 0) {
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event("change"));
+      }
+    });
+
+    uploadBtn.addEventListener("click", function () {
+      uploadBtn.disabled = true;
+      loadingMsg.style.display = "block";
+      resultText.style.display = "none";
+
+      setTimeout(() => {
+        loadingMsg.style.display = "none";
+        const results = [
+          "Looks natural 📷",
+          "Probably AI-generated 🤖",
+          "Hmm... hard to tell 🧐",
+          "Strong signs of AI ✨",
+          "Most likely natural 🍃"
+        ];
+        const randomResult = results[Math.floor(Math.random() * results.length)];
+        resultText.textContent = randomResult;
+        resultText.style.display = "block";
+        uploadBtn.disabled = false;
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

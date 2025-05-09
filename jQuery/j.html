@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #000000;
+            color: red;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+   <h1>Hello</h1>
+    <button>Hit me</button><br>
+    <button>Hit me</button>
+    <button>Hit me</button>
+    <button>Hit me</button>
+    <button>Hit me</button>
+    <input type="text" placeholder="Type something...">
+
+    <script>
+        for(var i=0; i<5 ;i++){
+            document.querySelectorAll("button")[i].addEventListener("click", function(){
+                this.style.backgroundColor = "red";
+                this.style.color = "black";
+            });
+        }
+        $("h1").before("<p>jQuery is a fast, small, and feature-rich JavaScript library.</p>");
+        $("button").on("click",function(){
+            $("h1").hide();
+        });
+        $("input").on("keyup", function(){
+            $("h1").text($(this).val());
+        });
+    </script>
+</body>
+</html>
