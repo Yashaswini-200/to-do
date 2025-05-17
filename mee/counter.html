@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(215, 215, 215);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: linear-gradient(to right, #353535, #494b4b);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 2rem 0 1rem;
+      font-size: 2rem;
+    }
+
+    #counterValue {
+      font-size: 3rem;
+      margin: 1rem 0;
+    }
+
+    .counter-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #e8e7e7;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #d1d1d1;
+    }
+
+    @media (max-width: 400px) {
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Counter</h1>
+    <div class="counter-container">
+      <p id="counterValue">0</p>
+      <div class="btn-group">
+        <button id="incrementBtn">Increment</button>
+        <button id="decrementBtn">Decrement</button>
+        <button id="reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const Num = document.getElementById("counterValue");
+    const Increment = document.getElementById("incrementBtn");
+    const Decrement = document.getElementById("decrementBtn");
+    const reset = document.getElementById("reset");
+    let count = 0;
+
+    function displayNum() {
+      Num.innerText = count;
+    }
+
+    Increment.addEventListener("click", () => {
+      count++;
+      displayNum();
+    });
+
+    Decrement.addEventListener("click", () => {
+      if (count > 0) {
+        count--;
+        displayNum();
+      }
+    });
+
+    reset.addEventListener("click", () => {
+      count = 0;
+      displayNum();
+    });
+    // Initialize the display
+    
+
+    displayNum();
+  </script>
+</body>
+</html>

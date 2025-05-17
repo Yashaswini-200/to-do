@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            height: 200px;
+            width: 400px;
+        }
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        [type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            height: 500px;
+            width: 400px;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" name="text" id="text" placeholder="Enter text here">
+    </div>
+    <script>
+        const textInput = document.getElementById('text');
+        const text=textInput.value.length;
+        function updateText() {
+            const text = textInput.value;
+            console.log(text);
+            if (text.length > 200) {
+                textInput.value = text.slice(0, 200);
+                alert("Maximum character limit reached");
+                
+            }
+            if (text.length < 1) {
+                alert("Please enter some text");
+            }
+        }
+
+            
+    </script>
+</body>
+</html>
