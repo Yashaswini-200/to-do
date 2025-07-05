@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solar System</title>
+<style>
+  body {
+    background: linear-gradient(to bottom, #000000, #0B0C10);
+    margin: 0;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+  }
+  .solarsystem {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 80px;
+    overflow: hidden;
+    padding-left: 80px;
+    box-sizing: border-box;
+  }
+  .sun {
+      display: flex;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, #FFD700 60%, #FFA500 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 80px 20px #ffe066, 0 0 160px 40px #ffd70055;
+      margin-left: -80px; /* Negative margin to push half off-screen */
+      z-index: 10;
+      justify-content: flex-start;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    box-shadow: 0 0 5px white;
+    animation: twinkle 1.5s infinite alternate;
+  }
+  @keyframes twinkle {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+  }
+  .planet {
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .planet:hover {
+    transform: scale(1.3);
+  }
+  .planet-mercury {
+    background: radial-gradient(circle, #B0B0B0, #5b5858);
+    width: 30px;  /* bigger */
+    height: 30px;
+    /*box-shadow: 0 0 15px 4px #B0B0B0;*/
+  }
+  .planet-venus {
+    background: radial-gradient(circle, #EEDC82, #676249);
+    width: 38px;
+    height: 38px;
+  }
+  .planet-earth {
+    background: radial-gradient(circle, #1E90FF, #0B3D91);
+    width: 40px;
+    height: 40px;
+  }
+  .planet-mars {
+    background: radial-gradient(circle, #FF4500, #8B0000);
+    width: 35px;
+    height: 35px;
+  }
+  .planet-jupiter {
+    background: radial-gradient(circle, #D2B48C, #8B4513);
+    width: 60px;
+    height: 60px;
+  }
+  .planet-saturn {
+    background: radial-gradient(circle, #F5DEB3, #D2B48C);
+    width: 55px;
+    height: 55px;
+  }
+  .planet-saturn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    transform: translate(-50%, -50%);
+  }
+  .planet-uranus {
+    background: radial-gradient(circle, #AFEEEE, #4682B4);
+    width: 48px;
+    height: 48px;
+  }
+  .planet-neptune {
+    background: radial-gradient(circle, #000080, #00008B);
+    width: 45px;
+    height: 45px;
+  }
+  .info-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+  <div class="solarsystem">
+    <div class="sun" onclick="info()" onmouseover="showInfo('The Sun: The star at the center of our solar system, providing light and heat to the planets.')"></div>
+    <div class="planet planet-mercury" onclick="info()" onmouseover="showInfo('Mercury: The closest planet to the Sun, known for its extreme temperature variations and lack of atmosphere.')"></div>
+    <div class="planet planet-venus" onclick="info()" onmouseover="showInfo('Venus: The second planet from the Sun, often called Earth\'s twin due to its similar size, but has a thick, toxic atmosphere.')"></div>
+    <div class="planet planet-earth" onclick="info()" onmouseover="showInfo('Earth: The third planet from the Sun, the only known planet to support life, with a diverse environment and atmosphere.')"></div>
+    <div class="planet planet-mars" onclick="info()" onmouseover="showInfo('Mars: The fourth planet from the Sun, known as the Red Planet due to its iron oxide-rich surface.')"></div>
+    <div class="planet planet-jupiter" onclick="info()" onmouseover="showInfo('Jupiter: The largest planet in our solar system, known for its Great Red Spot and many moons.')"></div>
+    <div class="planet planet-saturn" onclick="info()" onmouseover="showInfo('Saturn: Known for its stunning rings, Saturn is the sixth planet from the Sun and has numerous moons.')"></div>
+    <div class="planet planet-uranus" onclick="info()" onmouseover="showInfo('Uranus: The seventh planet from the Sun, known for its unique tilt and blue-green color due to methane in its atmosphere.')"></div>
+    <div class="planet planet-neptune" onclick="info()" onmouseover="showInfo('Neptune: The eighth and farthest planet from the Sun, known for its deep blue color and strong winds.')"></div>
+  </div>
+  <div class="info-box">Click on a planet to learn more about it.</div>
+<script>
+  const infoBox = document.querySelector('.info-box');
+
+  function showInfo(text) {
+    infoBox.textContent = text;
+  }
+
+  // Reset info when mouse leaves any planet or sun area
+  document.querySelectorAll('.planet, .sun').forEach(el => {
+    el.addEventListener('mouseout', () => {
+      infoBox.textContent = 'Click on a planet to learn more about it.';
+    });
+  });
+
+  // Stars
+  function stars() {
+    const starCount = 100;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * window.innerWidth + 'px';
+      star.style.top = Math.random() * window.innerHeight + 'px';
+      star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+      star.style.opacity = Math.random();
+      document.body.appendChild(star);
+    }
+  }
+  stars();
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Common Emitter Amplifier Circuit</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .circuit {
+      display: grid;
+      grid-template-columns: repeat(5, 80px);
+      grid-template-rows: repeat(7, 60px);
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+    .component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 0.8em;
+      text-align: center;
+      padding: 5px;
+      border-radius: 5px;
+      min-height: 40px;
+      min-width: 40px;
+      z-index: 1;
+    }
+    .wire {
+      height: 4px;
+      width: 80px;
+      background-color: black;
+      grid-column: span 1;
+    }
+    .vertical-wire {
+      width: 4px;
+      height: 60px;
+      background-color: black;
+      margin: auto;
+      grid-row: span 1;
+    }
+    .junction {
+      width: 10px;
+      height: 10px;
+      background-color: black;
+      border-radius: 50%;
+      margin: auto;
+      z-index: 2;
+    }
+    /* Grid positioning for each element */
+    .vcc      { grid-column: 3; grid-row: 1; }
+    .vw1      { grid-column: 3; grid-row: 2; }
+    .rc       { grid-column: 3; grid-row: 3; }
+    .vw2      { grid-column: 3; grid-row: 4; }
+    .j1       { grid-column: 3; grid-row: 5; }
+    .w1       { grid-column: 2; grid-row: 5; }
+    .cin      { grid-column: 1; grid-row: 5; }
+    .q        { grid-column: 3; grid-row: 6; }
+    .vw3      { grid-column: 3; grid-row: 7; }
+    .re       { grid-column: 4; grid-row: 7; }
+    .w2       { grid-column: 5; grid-row: 7; }
+    .cout     { grid-column: 5; grid-row: 6; }
+  </style>
+</head>
+<body>
+  <h1>Common Emitter Amplifier (CE)</h1>
+  <div class="circuit">
+    <div class="component vcc">V<sub>cc</sub></div>
+    <div class="vertical-wire vw1"></div>
+    <div class="component rc">R<sub>C</sub></div>
+    <div class="vertical-wire vw2"></div>
+    <div class="junction j1"></div>
+    <div class="wire w1"></div>
+    <div class="component cin">C<sub>in</sub></div>
+    <div class="component q">Q (NPN)</div>
+    <div class="vertical-wire vw3"></div>
+    <div class="component re">R<sub>E</sub></div>
+    <div class="wire w2"></div>
+    <div class="component cout">C<sub>out</sub></div>
+  </div>
+</body>
+</html>

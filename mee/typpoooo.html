@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
+            color: #333;
+            white-space: pre-wrap;
+            overflow-wrap: break-word; 
+            animation: blink 0.75s step-end infinite;
+            border-right: 2px solid black;
+        }
+        @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+    </style>
+</head>
+<body>
+    <p></p>
+    <script>
+        textElement= document.querySelector('p');
+        let text="Sampling gates are circuits that allow a portion of an input signal to pass through (like opening a gate to let some signal in). They’re super handy in pulse circuits and analog sampling. In pulse circuits, sampling gates help control when a signal is allowed to pass, which is crucial for timing and synchronization. In analog sampling, they let you capture a snapshot of an analog signal at a specific moment, which is essential for converting it into a digital format. So, sampling gates are like the gatekeepers of signals, deciding when and how much of a signal gets through, making them essential for both timing in pulse circuits and capturing analog signals.";
+        let index=0;
+        function typing(){
+            if(index<text.length){
+                textElement.textContent += text.charAt(index);
+                index++;    
+                setTimeout(typing, 50);
+            }
+        }
+        typing();
+    </script>
+</body>
+</html>

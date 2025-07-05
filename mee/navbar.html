@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Navbar with Toggle</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    /* Navbar Styles */
+    nav {
+      background: linear-gradient(to right, #4e54c8, #8f94fb);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Hamburger button */
+    .button {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .button span {
+      display: block;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .button.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .button.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .button.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      gap: 20px;
+      transition: max-height 0.3s ease;
+      overflow: hidden;
+    }
+
+    li a {
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+
+    li a:hover {
+      color: #ffe066;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .button {
+        display: flex;
+      }
+      ul {
+        flex-direction: column;
+        width: 100%;
+        background: linear-gradient(to right, #4e54c8, #8f94fb);
+        max-height: 0;
+      }
+      ul.show {
+        max-height: 500px; /* enough to show all links vertically */
+      }
+      li {
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">MyBrand</div>
+    <div class="button" onclick="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul id="navlinks">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Pricing</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Sign In</a></li>
+      <li><a href="#">Cart</a></li>
+    </ul>
+  </nav>
+
+  <script>
+    const navLinks = document.getElementById("navlinks");
+    const hamburger = document.querySelector(".button");
+
+    function toggleNav() {
+      navLinks.classList.toggle("show");
+      hamburger.classList.toggle("active");
+    }
+
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        navLinks.classList.add("show");
+        hamburger.classList.remove("active");
+      } else {
+        navLinks.classList.remove("show");
+        hamburger.classList.remove("active");
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('DOMContentLoaded', handleResize);
+  </script>
+</body>
+</html>
